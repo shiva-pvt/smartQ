@@ -1,0 +1,738 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Bricolage+Grotesque:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+
+:root{
+  --bg:#f7f5f0;
+  --bg2:#efecea;
+  --ink:#0e0d0b;
+  --ink2:#3d3a35;
+  --ink3:#8a857d;
+  --cream:#faf8f4;
+  --card:#ffffff;
+  --border:#e2ddd7;
+  --border2:#ccc7be;
+  --lime:#b8f53c;
+  --lime-dark:#8ac42a;
+  --teal:#00c9a7;
+  --coral:#ff5c3a;
+  --amber:#f5a623;
+  --blue:#2563eb;
+  --red:#e53e3e;
+  --green:#16a34a;
+  --shadow:0 2px 12px rgba(14,13,11,.08);
+  --shadow-lg:0 8px 32px rgba(14,13,11,.14);
+  --r:14px;--r-sm:8px;
+}
+
+html,body{background:var(--bg);color:var(--ink);font-family:'Bricolage Grotesque',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* ─── NAVBAR ─── */
+.nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;height:60px;
+  background:rgba(247,245,240,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:200;
+}
+.logo{font-family:'Clash Display',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:-.03em;color:var(--ink);display:flex;align-items:center;gap:8px}
+.logo-dot{width:10px;height:10px;background:var(--lime);border-radius:50%;display:inline-block;box-shadow:0 0 0 3px rgba(184,245,60,.3);animation:breathe 2s infinite}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 3px rgba(184,245,60,.3)}50%{box-shadow:0 0 0 7px rgba(184,245,60,.1)}}
+.nav-pills{display:flex;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:40px;padding:3px}
+.npill{padding:5px 16px;border-radius:40px;font-size:12px;font-weight:600;letter-spacing:.01em;cursor:pointer;border:none;background:transparent;color:var(--ink3);transition:all .2s;font-family:'Bricolage Grotesque',sans-serif}
+.npill.active{background:var(--ink);color:#fff}
+.npill:hover:not(.active){background:var(--border);color:var(--ink2)}
+.live-badge{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--green);background:#dcfce7;border:1px solid #bbf7d0;border-radius:20px;padding:4px 12px;letter-spacing:.03em}
+.live-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:breathe 1.5s infinite}
+
+/* ─── PAGES ─── */
+.page{display:none;animation:slideUp .3s ease}
+.page.active{display:block}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── HERO ─── */
+.hero{
+  position:relative;overflow:hidden;
+  background:var(--ink);
+  border-radius:0 0 var(--r) var(--r);
+  padding:2.5rem 2rem 2rem;
+  margin-bottom:1.5rem;
+  min-height:200px;
+}
+.hero-bg-img{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1400&q=80');
+  background-size:cover;background-position:center;
+  opacity:.18;
+}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(120deg,rgba(14,13,11,.95) 40%,rgba(14,13,11,.6))}
+.hero-content{position:relative;z-index:2}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;background:rgba(184,245,60,.15);border:1px solid rgba(184,245,60,.3);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--lime);letter-spacing:.06em;margin-bottom:1rem;text-transform:uppercase}
+.hero-h{font-family:'Clash Display',sans-serif;font-size:2rem;font-weight:700;color:#fff;line-height:1.1;letter-spacing:-.03em;margin-bottom:.5rem}
+.hero-h span{color:var(--lime)}
+.hero-sub{color:rgba(255,255,255,.55);font-size:13px;font-weight:400;line-height:1.6;max-width:460px;margin-bottom:1.5rem}
+.hero-stats{display:flex;gap:2rem}
+.hstat{text-align:left}
+.hstat-val{font-family:'Clash Display',sans-serif;font-size:1.5rem;font-weight:700;color:var(--lime)}
+.hstat-lbl{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+
+/* ─── COUNTER CARDS ─── */
+.section-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.counter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.cc{
+  background:var(--card);border:1.5px solid var(--border);
+  border-radius:var(--r);overflow:hidden;cursor:pointer;
+  transition:all .22s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:var(--shadow);
+}
+.cc:hover{transform:translateY(-4px) scale(1.01);box-shadow:var(--shadow-lg);border-color:var(--border2)}
+.cc.selected{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink),var(--shadow-lg)}
+.cc-img{width:100%;height:90px;object-fit:cover;display:block}
+.cc-body{padding:.85rem}
+.cc-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:5px;margin-bottom:.4rem;text-transform:uppercase;letter-spacing:.04em}
+.cc-name-t{font-family:'Clash Display',sans-serif;font-size:.95rem;font-weight:600;margin-bottom:.15rem;color:var(--ink)}
+.cc-svc{font-size:11px;color:var(--ink3);margin-bottom:.65rem}
+.cc-foot{display:flex;align-items:center;justify-content:space-between}
+.cc-q{font-size:11px;color:var(--ink3)}
+.cc-q strong{color:var(--ink);font-weight:700}
+.cc-wait{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500}
+
+/* tag colors */
+.tag-low{background:#dcfce7;color:#15803d}
+.tag-med{background:#fef9c3;color:#a16207}
+.tag-high{background:#fee2e2;color:#b91c1c}
+
+/* ─── JOIN PANEL ─── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem}
+.panel{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:1.25rem;box-shadow:var(--shadow)}
+
+.qt-empty{text-align:center;padding:2.5rem 1rem;color:var(--ink3);font-size:13px}
+.qt-empty-icon{font-size:2.5rem;margin-bottom:.5rem}
+
+.token-display{text-align:center;padding:.5rem 0 1rem}
+.td-token{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--ink3);margin-bottom:.3rem;letter-spacing:.1em}
+.td-num{font-family:'Clash Display',sans-serif;font-size:3.8rem;font-weight:700;color:var(--ink);line-height:1;letter-spacing:-.04em}
+.td-sub{font-size:12px;color:var(--ink3);margin-top:.2rem}
+.td-wait{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:1rem;background:var(--bg2);border-radius:8px;padding:.6rem;font-size:12px;color:var(--ink2)}
+.td-wait strong{color:var(--amber);font-weight:700}
+.progress-wrap{margin:.75rem 0}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--ink3);margin-bottom:.35rem}
+.pbar{height:5px;background:var(--bg2);border-radius:4px;overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,var(--lime),var(--teal));border-radius:4px;transition:width .6s ease}
+.alert-row{display:flex;align-items:center;gap:8px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:.65rem;font-size:12px;color:#92400e;margin-top:.75rem}
+
+.flabel{font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:.35rem;display:block}
+.finput{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:9px 12px;font-size:13px;font-family:'Bricolage Grotesque',sans-serif;color:var(--ink);outline:none;transition:.15s;margin-bottom:.65rem}
+.finput:focus{border-color:var(--ink);background:#fff}
+.fselect{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:9px 12px;font-size:13px;font-family:'Bricolage Grotesque',sans-serif;color:var(--ink);outline:none;cursor:pointer;margin-bottom:.65rem;appearance:none}
+.btn-join{width:100%;padding:11px;border:none;border-radius:var(--r-sm);background:var(--ink);color:#fff;font-family:'Clash Display',sans-serif;font-size:15px;font-weight:600;letter-spacing:.01em;cursor:pointer;transition:all .18s;margin-top:.35rem}
+.btn-join:hover{background:#2a2723;transform:translateY(-1px)}
+.btn-leave{width:100%;padding:9px;border:1.5px solid var(--border2);border-radius:var(--r-sm);background:transparent;color:var(--ink3);font-family:'Bricolage Grotesque',sans-serif;font-size:13px;font-weight:500;cursor:pointer;margin-top:.5rem;transition:.15s}
+.btn-leave:hover{border-color:var(--coral);color:var(--coral);background:#fff5f5}
+
+/* ─── HOURLY ─── */
+.forecast-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:1.5rem;box-shadow:var(--shadow)}
+.fc-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem .75rem;border-bottom:1px solid var(--border)}
+.fc-title{font-family:'Clash Display',sans-serif;font-size:1rem;font-weight:600;color:var(--ink)}
+.fc-img-strip{position:relative;height:100px;overflow:hidden}
+.fc-img-strip img{width:100%;height:100%;object-fit:cover;opacity:.7}
+.fc-img-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(247,245,240,0),rgba(247,245,240,1))}
+.fc-bars{display:flex;gap:5px;align-items:flex-end;height:64px;padding:0 1.25rem 0}
+.hbar{flex:1;border-radius:4px 4px 0 0;cursor:pointer;transition:opacity .15s;position:relative}
+.hbar:hover{opacity:.8}
+.hbar-labels{display:flex;gap:5px;padding:4px 1.25rem 1rem}
+.hbar-label{flex:1;font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--ink3);text-align:center}
+
+/* ─── PREDICT ─── */
+.predict-hero{
+  position:relative;overflow:hidden;background:var(--ink);
+  border-radius:var(--r);padding:1.75rem;margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:1.5rem;
+}
+.ph-img{width:120px;height:120px;border-radius:10px;object-fit:cover;flex-shrink:0;border:2px solid rgba(255,255,255,.1)}
+.ph-content h2{font-family:'Clash Display',sans-serif;font-size:1.4rem;font-weight:700;color:#fff;letter-spacing:-.03em;margin-bottom:.35rem}
+.ph-content p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.6}
+.ph-chips{display:flex;gap:8px;margin-top:.85rem;flex-wrap:wrap}
+.chip{font-size:11px;font-weight:600;padding:4px 10px;border-radius:5px;font-family:'JetBrains Mono',monospace}
+.chip-g{background:rgba(184,245,60,.15);color:var(--lime);border:1px solid rgba(184,245,60,.25)}
+.chip-r{background:rgba(255,92,58,.15);color:#ff8c75;border:1px solid rgba(255,92,58,.25)}
+.chip-a{background:rgba(245,166,35,.15);color:var(--amber);border:1px solid rgba(245,166,35,.25)}
+
+.days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;margin-bottom:1.5rem}
+.day-card{background:var(--card);border:1.5px solid var(--border);border-radius:10px;padding:.75rem .5rem;text-align:center;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
+.day-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.day-name{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.day-bar-wrap{height:50px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:6px}
+.day-bar{width:16px;border-radius:3px 3px 0 0}
+.day-lvl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+
+.chart-panel{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:1.25rem;margin-bottom:1.5rem;box-shadow:var(--shadow)}
+.cp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.cp-title{font-family:'Clash Display',sans-serif;font-size:1rem;font-weight:600;color:var(--ink)}
+.chart-wrap{position:relative;height:170px}
+.legend{display:flex;gap:16px;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ink3)}
+.leg-dot{width:10px;height:10px;border-radius:2px}
+
+.reco-card{background:linear-gradient(135deg,#0e0d0b 0%,#1c1a16 100%);border-radius:var(--r);padding:1.5rem;position:relative;overflow:hidden}
+.reco-card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(184,245,60,.12),transparent 70%)}
+.reco-img{position:absolute;right:0;top:0;bottom:0;width:160px;object-fit:cover;opacity:.15;border-radius:0 var(--r) var(--r) 0}
+.reco-content{position:relative;z-index:2}
+.reco-content h3{font-family:'Clash Display',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:.6rem;letter-spacing:-.02em}
+.reco-line{display:flex;align-items:flex-start;gap:8px;margin-bottom:.5rem;font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
+.reco-line strong{color:#fff}
+
+/* ─── ADMIN ─── */
+.admin-hero{
+  background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;
+  margin-bottom:1.5rem;box-shadow:var(--shadow);
+}
+.ah-img{width:100%;height:120px;object-fit:cover;object-position:center 30%;display:block}
+.ah-body{padding:1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.ah-text h2{font-family:'Clash Display',sans-serif;font-size:1.3rem;font-weight:700;color:var(--ink);letter-spacing:-.02em;margin-bottom:.2rem}
+.ah-text p{font-size:12px;color:var(--ink3)}
+.ah-status{display:flex;gap:10px}
+.status-pill{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:5px 12px;border-radius:20px}
+.sp-green{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+.sp-amber{background:#fef9c3;color:#a16207;border:1px solid #fde68a}
+
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.5rem}
+.scard{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:1rem;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.scard-accent{position:absolute;top:0;left:0;right:0;height:3px}
+.scard-ico{font-size:1.2rem;margin-bottom:.5rem}
+.scard-val{font-family:'Clash Display',sans-serif;font-size:1.9rem;font-weight:700;color:var(--ink);line-height:1;letter-spacing:-.03em}
+.scard-lbl{font-size:11px;color:var(--ink3);margin-top:.2rem}
+.scard-trend{font-size:10px;font-weight:600;margin-top:.5rem;display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:5px}
+.tr-up{background:#dcfce7;color:#15803d}.tr-dn{background:#fee2e2;color:#b91c1c}.tr-neu{background:var(--bg2);color:var(--ink3)}
+
+.admin-layout{display:grid;grid-template-columns:3fr 2fr;gap:1.25rem;margin-bottom:1.5rem}
+
+.queue-table{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.qt-head{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1.25rem;border-bottom:1px solid var(--border)}
+.qt-title{font-family:'Clash Display',sans-serif;font-size:.95rem;font-weight:600;color:var(--ink)}
+.qt-item{display:flex;align-items:center;gap:12px;padding:.7rem 1.25rem;border-bottom:1px solid var(--border);transition:.15s}
+.qt-item:hover{background:var(--bg)}
+.qt-item:last-child{border-bottom:none}
+.qi-num{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--ink3);width:52px;flex-shrink:0}
+.qi-avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.qi-name{flex:1;font-size:13px;font-weight:500;color:var(--ink)}
+.qi-svc{font-size:11px;color:var(--ink3)}
+.qi-wait{font-size:11px;color:var(--ink3);margin-right:8px;font-family:'JetBrains Mono',monospace}
+.qi-status{font-size:10px;font-weight:600;padding:3px 8px;border-radius:5px;text-transform:uppercase;letter-spacing:.04em}
+.s-serving{background:#dbeafe;color:#1d4ed8}.s-waiting{background:#f3e8ff;color:#7c3aed}.s-next{background:#fef9c3;color:#a16207}
+.qbtn-row{display:flex;gap:8px;padding:.85rem 1.25rem;border-top:1px solid var(--border)}
+.qbtn{flex:1;padding:8px;border-radius:var(--r-sm);font-family:'Clash Display',sans-serif;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid;transition:all .15s;letter-spacing:.01em}
+.qbtn-next{background:var(--ink);color:#fff;border-color:var(--ink)}
+.qbtn-next:hover{background:#2a2723}
+.qbtn-pause{background:transparent;color:var(--amber);border-color:var(--amber)}
+.qbtn-pause:hover{background:#fffbeb}
+.qbtn-reset{background:transparent;color:var(--coral);border-color:var(--coral)}
+.qbtn-reset:hover{background:#fff5f5}
+
+.log-panel{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
+.log-head{padding:.85rem 1.25rem;border-bottom:1px solid var(--border)}
+.log-title{font-family:'Clash Display',sans-serif;font-size:.95rem;font-weight:600;color:var(--ink)}
+.log-body{padding:.75rem 1.25rem;max-height:280px;overflow-y:auto}
+.log-entry{display:flex;align-items:flex-start;gap:8px;margin-bottom:.75rem;font-size:12px}
+.log-pip{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.log-t{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--ink3);min-width:36px;flex-shrink:0;margin-top:2px}
+.log-m{color:var(--ink2);line-height:1.5}
+.log-m b{color:var(--ink)}
+
+/* ─── TOAST ─── */
+.toast{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  background:var(--ink);color:#fff;
+  border-radius:12px;padding:14px 18px;
+  font-size:13px;display:flex;align-items:center;gap:10px;
+  z-index:9999;transform:translateY(100px);opacity:0;
+  transition:all .35s cubic-bezier(.34,1.56,.64,1);
+  max-width:320px;box-shadow:0 8px 40px rgba(0,0,0,.3);
+}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-bar{position:absolute;bottom:0;left:0;height:3px;background:var(--lime);border-radius:0 0 12px 12px;animation:none}
+.toast-bar.running{animation:toast-shrink 3.5s linear forwards}
+@keyframes toast-shrink{from{width:100%}to{width:0}}
+.toast-ico{font-size:18px;flex-shrink:0}
+.toast-text strong{display:block;font-weight:600;font-size:13px}
+.toast-text span{font-size:11px;opacity:.65;display:block;margin-top:1px}
+
+/* ─── PAGE PADDING ─── */
+#page-user,#page-predict,#page-admin{padding:1.5rem}
+</style>
+
+<div class="toast" id="toast">
+  <div class="toast-ico" id="toast-ico">✅</div>
+  <div class="toast-text"><strong id="toast-title">Hello</strong><span id="toast-sub"></span></div>
+  <div class="toast-bar" id="toast-bar"></div>
+</div>
+
+<nav class="nav">
+  <div class="logo"><span class="logo-dot"></span>SmartQ</div>
+  <div class="nav-pills">
+    <button class="npill active" onclick="nav('user',this)">Join Queue</button>
+    <button class="npill" onclick="nav('predict',this)">Predict</button>
+    <button class="npill" onclick="nav('admin',this)">Admin</button>
+  </div>
+  <div class="live-badge">Live</div>
+</nav>
+
+<!-- ═══ USER PAGE ═══ -->
+<div class="page active" id="page-user">
+  <div class="hero">
+    <div class="hero-bg-img"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">● AI-Powered Queue Management</div>
+      <div class="hero-h">Skip the wait,<br>not the <span>service.</span></div>
+      <div class="hero-sub">Join queues remotely, track your position live, and get predicted wait times before you step out.</div>
+      <div class="hero-stats">
+        <div class="hstat"><div class="hstat-val" id="hs-served">247</div><div class="hstat-lbl">Served Today</div></div>
+        <div class="hstat"><div class="hstat-val">14m</div><div class="hstat-lbl">Avg Wait</div></div>
+        <div class="hstat"><div class="hstat-val">3</div><div class="hstat-lbl">Open Counters</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Select Counter</div>
+  <div class="counter-grid" id="counter-grid"></div>
+
+  <div class="two-col">
+    <div class="panel">
+      <div class="section-label" style="margin-bottom:.75rem">Your Status</div>
+      <div id="queue-tracker"><div class="qt-empty"><div class="qt-empty-icon">🎫</div>Select a counter<br>and join the queue</div></div>
+    </div>
+    <div class="panel">
+      <div class="section-label" style="margin-bottom:.75rem">Register & Join</div>
+      <label class="flabel">Full Name</label>
+      <input class="finput" id="inp-name" placeholder="e.g. Arun Kumar" />
+      <label class="flabel">Phone Number</label>
+      <input class="finput" id="inp-phone" placeholder="+91 98765 43210" />
+      <label class="flabel">Service Required</label>
+      <select class="fselect" id="inp-svc">
+        <option value="">Choose service type...</option>
+        <option>Account Inquiry</option><option>Token Renewal</option>
+        <option>Documentation</option><option>Bill Payment</option><option>General Query</option>
+      </select>
+      <button class="btn-join" onclick="joinQ()">Join Queue →</button>
+      <button class="btn-leave" onclick="leaveQ()">Leave Queue</button>
+    </div>
+  </div>
+
+  <div class="forecast-card">
+    <div class="fc-head">
+      <div class="fc-title">Today's Crowd Forecast</div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink3)">LIVE · Updated 2m ago</span>
+    </div>
+    <div class="fc-img-strip">
+      <img src="https://images.unsplash.com/photo-1533073526757-2c8ca1df9f1c?w=1200&q=60" alt="">
+      <div class="fc-img-overlay"></div>
+    </div>
+    <div class="fc-bars" id="hbars"></div>
+    <div class="hbar-labels" id="hlabels"></div>
+  </div>
+</div>
+
+<!-- ═══ PREDICT PAGE ═══ -->
+<div class="page" id="page-predict">
+  <div class="predict-hero">
+    <img class="ph-img" src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=400&q=70" alt="">
+    <div class="ph-content">
+      <h2>Crowd Intelligence Engine</h2>
+      <p>ML-powered predictions using historical patterns, time-of-day signals, and real-time queue data to forecast crowd levels with 89% accuracy.</p>
+      <div class="ph-chips">
+        <span class="chip chip-g">89% Accuracy</span>
+        <span class="chip chip-a">7-Day Forecast</span>
+        <span class="chip chip-r">Peak Alerts</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">Weekly Crowd Forecast</div>
+  <div class="days-grid" id="days-grid"></div>
+
+  <div class="chart-panel">
+    <div class="cp-head">
+      <div class="cp-title">Predicted Wait Time — Today</div>
+      <div class="legend">
+        <div class="leg-item"><div class="leg-dot" style="background:#0e0d0b"></div>Wait (min)</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#b8f53c"></div>Optimal window</div>
+      </div>
+    </div>
+    <div class="chart-wrap"><canvas id="waitChart"></canvas></div>
+  </div>
+
+  <div class="reco-card">
+    <img class="reco-img" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&q=60" alt="">
+    <div class="reco-content">
+      <h3>AI Recommendation</h3>
+      <div class="reco-line">🟢 <span><strong>Best days:</strong> Monday &amp; Sunday — crowd under 30%, avg. wait under 10 min</span></div>
+      <div class="reco-line">🔴 <span><strong>Avoid Saturday:</strong> Peak day, 90%+ crowd, wait times up to 55 min</span></div>
+      <div class="reco-line">⏰ <span><strong>Sweet spot:</strong> Arrive between <strong>8:00–9:30 AM</strong> or after <strong>4:30 PM</strong> on weekdays</span></div>
+      <div class="reco-line">📈 <span><strong>Trend:</strong> Queue demand is 12% higher this week vs last — plan ahead</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN PAGE ═══ -->
+<div class="page" id="page-admin">
+  <div class="admin-hero">
+    <img class="ah-img" src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1400&q=70" alt="">
+    <div class="ah-body">
+      <div class="ah-text">
+        <h2>Operations Dashboard</h2>
+        <p>Real-time queue control &amp; analytics — Thursday, April 2026</p>
+      </div>
+      <div class="ah-status">
+        <div class="status-pill sp-green">● 3 Counters Open</div>
+        <div class="status-pill sp-amber">⚠ Counter 3 Peak</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-grid" id="stats-grid"></div>
+
+  <div class="chart-panel">
+    <div class="cp-head">
+      <div class="cp-title">Queue Volume — Today</div>
+      <div class="legend">
+        <div class="leg-item"><div class="leg-dot" style="background:#0e0d0b"></div>Joined</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#b8f53c"></div>Served</div>
+      </div>
+    </div>
+    <div class="chart-wrap"><canvas id="adminChart"></canvas></div>
+  </div>
+
+  <div class="admin-layout">
+    <div class="queue-table">
+      <div class="qt-head">
+        <div class="qt-title">Active Queue — Counter 1</div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink3)" id="q-count">4 waiting</span>
+      </div>
+      <div id="admin-q"></div>
+      <div class="qbtn-row">
+        <button class="qbtn qbtn-next" onclick="nextTkn()">Call Next →</button>
+        <button class="qbtn qbtn-pause" onclick="toast2('Counter Paused','Counter 1 is temporarily on hold','⏸')">Pause</button>
+        <button class="qbtn qbtn-reset" onclick="resetQ()">Reset All</button>
+      </div>
+    </div>
+    <div class="log-panel">
+      <div class="log-head"><div class="log-title">Activity Log</div></div>
+      <div class="log-body" id="log-body"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const IMGS = [
+  'https://images.unsplash.com/photo-1611022254869-3a40c7cec78e?w=400&q=70',
+  'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&q=70',
+  'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=400&q=70',
+];
+const CCIMGS = [
+  'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&q=70',
+  'https://images.unsplash.com/photo-1560472355-536de3962603?w=500&q=70',
+  'https://images.unsplash.com/photo-1554774853-aae0a22c8aa4?w=500&q=70',
+];
+const AVATARS=[
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=70',
+  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=70',
+  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=70',
+  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=70',
+];
+const HOURS=['6a','7a','8a','9a','10a','11a','12p','1p','2p','3p','4p','5p','6p','7p','8p'];
+const CROWD=[5,8,22,55,70,85,60,72,65,80,78,88,72,45,20];
+const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const DLOAD=[45,60,80,70,55,90,30];
+
+const S={
+  counters:[
+    {id:1,name:'Counter 1',svc:'General Services',q:7,wait:21,load:'medium',img:CCIMGS[0]},
+    {id:2,name:'Counter 2',svc:'Account Inquiry',q:3,wait:9,load:'low',img:CCIMGS[1]},
+    {id:3,name:'Counter 3',svc:'Documentation',q:14,wait:42,load:'high',img:CCIMGS[2]},
+  ],
+  sel:null,joined:false,token:null,pos:null,
+  aq:[
+    {t:'TKN-042',n:'Arjun S.',s:'serving',av:AVATARS[0],svc:'Account Inquiry'},
+    {t:'TKN-043',n:'Meena R.',s:'next',av:AVATARS[1],svc:'Documentation'},
+    {t:'TKN-044',n:'Deepak T.',s:'waiting',av:AVATARS[2],svc:'Token Renewal'},
+    {t:'TKN-045',n:'Lakshmi V.',s:'waiting',av:AVATARS[3],svc:'General Query'},
+  ],
+  logs:[
+    {m:'<b>TKN-042</b> called to Counter 1',t:'now',c:'#2563eb'},
+    {m:'<b>Priya M.</b> joined Counter 2',t:'2m',c:'#7c3aed'},
+    {m:'<b>Counter 3</b> peak warning triggered',t:'5m',c:'#e53e3e'},
+    {m:'<b>TKN-039</b> served in 8 min',t:'9m',c:'#16a34a'},
+    {m:'<b>Raja K.</b> joined Counter 1',t:'11m',c:'#7c3aed'},
+  ]
+};
+
+function nav(page,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.npill').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  btn.classList.add('active');
+  if(page==='predict') initPredict();
+  if(page==='admin') initAdmin();
+}
+
+/* ── COUNTERS ── */
+function renderCounters(){
+  const g=document.getElementById('counter-grid');
+  g.innerHTML=S.counters.map(c=>{
+    const tc={'low':'tag-low','medium':'tag-med','high':'tag-high'}[c.load];
+    const lbl={'low':'Low Crowd','medium':'Moderate','high':'High Demand'}[c.load];
+    const wc={'low':'color:#16a34a','medium':'color:#a16207','high':'color:#b91c1c'}[c.load];
+    return`<div class="cc ${S.sel===c.id?'selected':''}" id="cc-${c.id}" onclick="selC(${c.id})">
+      <img class="cc-img" src="${c.img}" alt="">
+      <div class="cc-body">
+        <div class="cc-tag ${tc}">${lbl}</div>
+        <div class="cc-name-t">${c.name}</div>
+        <div class="cc-svc">${c.svc}</div>
+        <div class="cc-foot">
+          <div class="cc-q"><strong>${c.q}</strong> in queue</div>
+          <div class="cc-wait" style="${wc}">~${c.wait}m</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function selC(id){
+  S.sel=id; renderCounters();
+  if(!S.joined) renderTracker();
+}
+
+function renderTracker(){
+  const el=document.getElementById('queue-tracker');
+  if(!S.joined){
+    if(!S.sel){el.innerHTML='<div class="qt-empty"><div class="qt-empty-icon">🎫</div>Select a counter<br>and join the queue</div>';return;}
+    const c=S.counters.find(x=>x.id===S.sel);
+    el.innerHTML=`<div class="token-display">
+      <div class="td-token">ESTIMATED POSITION</div>
+      <div class="td-num">#${c.q+1}</div>
+      <div class="td-sub">Counter ${c.id} · ${c.svc}</div>
+      <div class="td-wait">Estimated wait: <strong>~${c.wait+3} min</strong></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Queue progress</span><span>0%</span></div>
+      <div class="pbar"><div class="pfill" style="width:0%"></div></div>
+    </div>
+    <div class="alert-row">💡 Best time today: <strong style="margin-left:4px">8:00–9:30 AM</strong></div>`;
+  } else {
+    const pct=Math.round(Math.max(5,100-(S.pos/12)*100));
+    el.innerHTML=`<div class="token-display">
+      <div class="td-token" style="color:#16a34a;font-size:10px">● QUEUE JOINED · ${S.token}</div>
+      <div class="td-num">${S.pos}</div>
+      <div class="td-sub">people ahead of you</div>
+      <div class="td-wait">Estimated: <strong>~${S.pos*3} min</strong></div>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>Progress</span><span>${pct}%</span></div>
+      <div class="pbar"><div class="pfill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="alert-row">🔔 Alert set — notifying when 2 remain</div>`;
+  }
+}
+
+function joinQ(){
+  if(!S.sel){toast2('No Counter','Please select a counter first','⚠️');return;}
+  const n=document.getElementById('inp-name').value.trim();
+  if(!n){toast2('Name Required','Enter your name to continue','⚠️');return;}
+  const c=S.counters.find(x=>x.id===S.sel);
+  S.joined=true; S.token='TKN-0'+(50+Math.floor(Math.random()*9)); S.pos=c.q+1;
+  c.q++; renderCounters(); renderTracker();
+  toast2('Queue Joined!',`${S.token} · Position ${S.pos} · Counter ${S.sel}`,'🎉');
+  addLog(`<b>${n}</b> joined Counter ${S.sel}`,'#7c3aed');
+  document.getElementById('hs-served').textContent=248;
+  startCountdown();
+}
+
+function leaveQ(){
+  if(!S.joined) return;
+  S.joined=false;
+  if(S.sel){const c=S.counters.find(x=>x.id===S.sel);if(c.q>0)c.q--;renderCounters();}
+  renderTracker(); toast2('Left Queue','You have been removed','👋');
+}
+
+function startCountdown(){
+  let p=S.pos;
+  const iv=setInterval(()=>{
+    if(!S.joined||p<=0){clearInterval(iv);return;}
+    p--;S.pos=p;renderTracker();
+    if(p===2) toast2('Almost There!','Only 2 people ahead — get ready!','⏳');
+    if(p===0){toast2('Your Turn!','Please proceed to Counter '+S.sel+' now','🟢');S.joined=false;clearInterval(iv);}
+  },4500);
+}
+
+/* ── HOURLY BARS ── */
+function renderHours(){
+  const max=Math.max(...CROWD);
+  const bw=document.getElementById('hbars');
+  const lw=document.getElementById('hlabels');
+  bw.innerHTML=CROWD.map((v,i)=>{
+    const h=Math.round((v/max)*56);
+    const col=v>75?'#e53e3e':v>45?'#f5a623':'#16a34a';
+    return`<div class="hbar" style="height:${h}px;background:${col};opacity:.75" data-i="${i}" title="${HOURS[i]}: ${v}% crowd"></div>`;
+  }).join('');
+  lw.innerHTML=HOURS.map(h=>`<div class="hbar-label">${h}</div>`).join('');
+}
+
+/* ── PREDICT ── */
+function initPredict(){
+  const g=document.getElementById('days-grid');
+  g.innerHTML=DAYS.map((d,i)=>{
+    const v=DLOAD[i];
+    const h=Math.round((v/100)*46);
+    const col=v>75?'#e53e3e':v>50?'#f5a623':'#16a34a';
+    const lbl=v>75?'High':v>50?'Med':'Low';
+    const lc=col;
+    return`<div class="day-card">
+      <div class="day-name">${d}</div>
+      <div class="day-bar-wrap"><div class="day-bar" style="height:${h}px;background:${col}"></div></div>
+      <div class="day-lvl" style="color:${lc}">${lbl}</div>
+    </div>`;
+  }).join('');
+  const ctx=document.getElementById('waitChart').getContext('2d');
+  if(window._wc) window._wc.destroy();
+  window._wc=new Chart(ctx,{
+    type:'line',
+    data:{
+      labels:HOURS,
+      datasets:[{
+        label:'Wait',data:[2,4,10,25,32,38,28,33,30,36,35,40,32,20,8],
+        borderColor:'#0e0d0b',backgroundColor:'rgba(14,13,11,.06)',
+        fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#0e0d0b',pointBorderColor:'#fff',pointBorderWidth:2
+      },{
+        label:'Optimal',data:[2,4,null,null,null,null,null,null,null,null,null,null,null,20,8],
+        borderColor:'#b8f53c',backgroundColor:'rgba(184,245,60,.15)',
+        fill:true,tension:.4,pointRadius:0,borderWidth:2,borderDash:[4,4]
+      }]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{color:'#e2ddd7'},ticks:{color:'#8a857d',font:{size:10,family:'JetBrains Mono'}}},
+        y:{grid:{color:'#e2ddd7'},ticks:{color:'#8a857d',font:{size:10}},beginAtZero:true}
+      }
+    }
+  });
+}
+
+/* ── ADMIN ── */
+function initAdmin(){
+  renderStats(); renderAdminQ(); renderLog();
+  const ctx=document.getElementById('adminChart').getContext('2d');
+  if(window._ac) window._ac.destroy();
+  const lbs=Array.from({length:10},(_,i)=>`${8+i}:00`);
+  window._ac=new Chart(ctx,{
+    type:'bar',
+    data:{
+      labels:lbs,
+      datasets:[
+        {label:'Joined',data:[5,12,18,24,20,16,22,19,25,28],backgroundColor:'rgba(14,13,11,.75)',borderRadius:4,borderSkipped:false},
+        {label:'Served',data:[4,10,16,22,18,14,20,17,23,25],backgroundColor:'rgba(184,245,60,.75)',borderRadius:4,borderSkipped:false}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#8a857d',font:{size:10,family:'JetBrains Mono'}}},
+        y:{grid:{color:'#e2ddd7'},ticks:{color:'#8a857d',font:{size:10}},beginAtZero:true}
+      }
+    }
+  });
+}
+
+function renderStats(){
+  const data=[
+    {ico:'👤',val:'247',lbl:'Total Served',trend:'+12%',dir:'up',ac:'#b8f53c'},
+    {ico:'⏱',val:'14m',lbl:'Avg Wait Time',trend:'-3 min',dir:'up',ac:'#00c9a7'},
+    {ico:'🔢',val:'24',lbl:'In Queue Now',trend:'3 active',dir:'',ac:'#f5a623'},
+    {ico:'📊',val:'87%',lbl:'Efficiency',trend:'+5%',dir:'up',ac:'#2563eb'},
+  ];
+  document.getElementById('stats-grid').innerHTML=data.map(d=>`
+    <div class="scard">
+      <div class="scard-accent" style="background:${d.ac}"></div>
+      <div class="scard-ico">${d.ico}</div>
+      <div class="scard-val">${d.val}</div>
+      <div class="scard-lbl">${d.lbl}</div>
+      <div class="scard-trend ${d.dir==='up'?'tr-up':d.dir==='dn'?'tr-dn':'tr-neu'}">${d.trend}</div>
+    </div>`).join('');
+}
+
+function renderAdminQ(){
+  const sc={'serving':'s-serving','next':'s-next','waiting':'s-waiting'};
+  const sl={'serving':'Serving','next':'Up Next','waiting':'Waiting'};
+  const el=document.getElementById('admin-q');
+  el.innerHTML=S.aq.map(q=>`
+    <div class="qt-item">
+      <div class="qi-num">${q.t}</div>
+      <img class="qi-avatar" src="${q.av}" alt="">
+      <div style="flex:1"><div class="qi-name">${q.n}</div><div class="qi-svc">${q.svc}</div></div>
+      <div class="qi-status ${sc[q.s]}">${sl[q.s]}</div>
+    </div>`).join('');
+  const cnt=document.getElementById('q-count');
+  if(cnt) cnt.textContent=S.aq.length+' waiting';
+}
+
+function renderLog(){
+  document.getElementById('log-body').innerHTML=S.logs.map(l=>`
+    <div class="log-entry">
+      <div class="log-pip" style="background:${l.c}"></div>
+      <div class="log-t">${l.t}</div>
+      <div class="log-m">${l.m}</div>
+    </div>`).join('');
+}
+
+function addLog(msg,color){
+  S.logs.unshift({m:msg,t:'now',c:color});
+  if(S.logs.length>8) S.logs.pop();
+  S.logs.forEach((l,i)=>{if(i>0&&l.t==='now')l.t='1m';});
+  renderLog();
+}
+
+function nextTkn(){
+  if(!S.aq.length) return;
+  const done=S.aq.shift();
+  toast2('Token Called',`${done.t} — ${done.n} called to counter`,'📢');
+  addLog(`<b>${done.t}</b> called · ${done.n}`,'#2563eb');
+  if(S.aq.length){S.aq[0].s='serving';if(S.aq.length>1)S.aq[1].s='next';}
+  renderAdminQ();
+}
+
+function resetQ(){S.aq=[];renderAdminQ();toast2('Queue Cleared','Counter 1 has been reset','🔄');addLog('<b>Admin</b> reset Counter 1 queue','#e53e3e');}
+
+/* ── TOAST ── */
+let toastTimer;
+function toast2(title,sub,ico='✅'){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-ico').textContent=ico;
+  document.getElementById('toast-title').textContent=title;
+  document.getElementById('toast-sub').textContent=sub;
+  const bar=document.getElementById('toast-bar');
+  bar.classList.remove('running');void bar.offsetWidth;bar.classList.add('running');
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3800);
+}
+
+/* ── LIVE UPDATES ── */
+setInterval(()=>{
+  S.counters.forEach(c=>{
+    c.q=Math.max(1,c.q+(Math.random()>.55?1:-1));
+    c.wait=Math.round(c.q*3);
+    c.load=c.q>10?'high':c.q>5?'medium':'low';
+  });
+  renderCounters();
+},5500);
+
+/* ── INIT ── */
+renderCounters(); renderHours();
+</script>
